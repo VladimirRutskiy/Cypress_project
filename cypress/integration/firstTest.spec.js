@@ -1,21 +1,63 @@
 /// <reference types="Cypress" />
 
-it('', () => {
+it('SHOULD', () => {
     cy.visit('https://next.privat24.ua/mobile?lang=en')
-    cy.contains('Sign in')
+    cy.get('[data-qa-node="amount"]')
+        .type(100)
+        .should('have.value', 100)
+        .and('be.visible')
 });
 
-it('', () => {
+it('EXPECT', () => {
     cy.visit('https://next.privat24.ua/mobile?lang=en')
-    cy.contains('div', 'Sign in')
+    cy.get('[data-qa-node="amount"]')
+        .type(100).then( input => {
+            expect(input).to.have.value(100)
+        })
+        
 });
 
-it('', () => {
-    cy.visit('https://next.privat24.ua/mobile?lang=en')
-    cy.contains('SIGN IN', {matchCase: false});
+
+it('EXPECT', () => {
+    cy.visit('https://next.privat24.ua/deposit/open?lang=en')
+    cy.get('[data-qa-value="UAH"]')
+        .should('be.checked')
+        
 });
 
-it.only('', () => {
-    cy.visit('https://next.privat24.ua/mobile?lang=en')
-    cy.get('footer').contains('free from cell phones');
+it('check default value for deposit', () => {
+    cy.visit('https://next.privat24.ua/deposit/open?lang=en')
+    cy.get('[data-qa-value="UAH"]')
+        .should('be.checked')
+        
+});
+
+it('check is visible archive link', () => {
+    cy.visit('https://next.privat24.ua/deposit/open?lang=en')
+    cy.contains('Мої депозити')
+        .trigger('mouseover')
+        .get('#archiveDeposits')
+        .should('be.visible')
+        
+});
+
+it('check is correct attr in button', () => {
+    cy.visit('https://next.privat24.ua/open?lang=en')
+    cy.contains('Show cards')
+        .should('have.attr', 'type')
+        .and('match', /button/)
+        
+});
+
+it('check is correct url', () => {
+    cy.visit('https://next.privat24.ua/open?lang=en')
+    cy.url()
+        .should('eq', 'https://next.privat24.ua/open?lang=en')
+        
+});
+
+it.only('check empty field', () => {
+    cy.visit('https://next.privat24.ua/open?lang=en')
+    cy.get('[type="checkbox"]')
+        .should('be.empty')
 });
